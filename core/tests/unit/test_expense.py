@@ -5,7 +5,7 @@ from core.expense import Expense
 from core.domain_error import (
     EmptyTitleError,
     InvalidAmountError,
-    InvalidExpenseDateError
+    InvalidExpenseDateError,
 )
 
 
@@ -44,7 +44,7 @@ def test_negative_amount_raises_error():
             title="Comida",
             amount=-5.0,
             description="Almuerzo",
-            expense_date=date.today()
+            expense_date=date.today(),
         )
 
 
@@ -66,5 +66,5 @@ def test_future_date_raises_error():
             title="Comida",
             amount=10.0,
             description="Almuerzo",
-            expense_date=date(2027, 1, 1)
+            expense_date=date(2027, 1, 1),
         )

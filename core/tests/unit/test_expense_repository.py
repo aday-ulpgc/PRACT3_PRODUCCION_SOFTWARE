@@ -58,11 +58,7 @@ def test_get_by_id_returns_expense():
     """
     repo = InMemoryExpenseRepository()
 
-    repo.save(create_expense(
-        id=1,
-        title="Gasto-Prueba",
-        amount=50
-    ))
+    repo.save(create_expense(id=1, title="Gasto-Prueba", amount=50))
 
     fetched_expense = repo.get_by_id(1)
 
@@ -70,7 +66,6 @@ def test_get_by_id_returns_expense():
     assert fetched_expense.id == 1
     assert fetched_expense.title == "Gasto de prueba"
     assert fetched_expense.amount == 50
-    
 
 
 def test_get_by_id_returns_none_if_not_found():
@@ -79,8 +74,7 @@ def test_get_by_id_returns_none_if_not_found():
     Se verifica que buscar un id inexistente no produce error, sino que devuelve None.
     """
     repo = InMemoryExpenseRepository()
-    
+
     fetched_expense = repo.get_by_id(99)
 
     assert fetched_expense is None
-

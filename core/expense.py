@@ -4,7 +4,7 @@ from datetime import date
 from core.domain_error import (
     InvalidAmountError,
     InvalidExpenseDateError,
-    EmptyTitleError
+    EmptyTitleError,
 )
 
 
@@ -17,7 +17,7 @@ class Expense:
     expense_date: date
 
     def __post_init__(self):
-        
+
         if self.title == "":
             raise EmptyTitleError("El titulo no debe estar vacío")
 
