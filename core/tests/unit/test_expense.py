@@ -66,5 +66,4 @@ def test_future_date_raises_error():
             title="Comida",
             amount=10.0,
             description="Almuerzo",
-            expense_date=date.today().replace(day = date.today().day + 1)
-        )
+            expense_date=date.today().replace(year=date.today().year + 1)        )
