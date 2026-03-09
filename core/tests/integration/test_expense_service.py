@@ -124,7 +124,7 @@ def test_remove_expense_reduces_total():
     expense_libro = service.create_expense(
         title="Libro", amount=20, description="", expense_date=date.today()
     )
-    expense_revista = service.create_expense(
+    service.create_expense(
         title="Revista", amount=5, description="", expense_date=date.today()
     )
 
