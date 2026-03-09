@@ -89,7 +89,19 @@ def test_create_multiple_expenses_and_list():
         - El número total de gastos en el sistema es exactamente dos, lo que verifica que no se sobrescriben ni se duplican registros al crear múltiples gastos.
     - Este test valida que la función de listado refleja fielmente todos los gastos registrados hasta el momento.
     """
-    ...
+    service = create_service()
+
+    service.create_expense(title="Pan", amount=3, description="Mercado", expense_date=date.today())
+    service.create_expense(title="Leche", amount=4, description="Supermercado", expense_date=date.today())
+
+    expenses = service.list_expenses()
+
+    assert len(expenses) == 2
+
+    titles = [expense.title for expense in expenses]
+    assert "Pan" in titles
+    assert "Leche" in titles
+
 
 
 def test_remove_expense_reduces_total():
@@ -104,7 +116,18 @@ def test_remove_expense_reduces_total():
           y que la operación no afecta otros registros.
     - La prueba valida tanto la integridad de la operación de borrado como la actualización exacta del listado.
     """
-    ...
+    service = create_service()
+
+    expense_libro = service.create_expense(title="Libro", amount=20, description="", expense_date=date.today())
+    expense_revista = service.create_expense(title="Revista", amount=5, description="", expense_date=date.today())
+
+    service.remove_expense(expense_libro.id)
+
+    expenses = service.list_expenses()
+    assert len(expenses) == 1
+    assert expenses[0].title == "Revista"
+
+
 
 
 def test_update_expense_partial_fields():
@@ -119,7 +142,17 @@ def test_update_expense_partial_fields():
         - El campo 'description' permanece sin cambios ("Ropa").
     - Este test asegura que el método update_expense respeta la inmutabilidad de los campos no especificados, realizando actualizaciones parciales de manera precisa.
     """
-    ...
+    service = create_service()
+    
+    expense = service.create_expense(title="Camiseta", amount=15, description="Ropa", expense_date=date.today())
+    
+    service.update_expense(expense_id=expense.id, amount=18)
+    
+    updated_expense = service.list_expenses()[0]
+    
+    assert updated_expense.title == "Camiseta"
+    assert updated_expense.amount == 18
+    assert updated_expense.description == "Ropa"
 
 
 def test_total_amount_after_removal():
@@ -132,4 +165,13 @@ def test_total_amount_after_removal():
     - Se recalcula el total y se espera que sea 25, reflejando únicamente el monto del gasto aún presente.
     - Este test valida que el método total_amount refleja los cambios en el sistema ante eliminaciones, manteniendo la consistencia de los datos agregados.
     """
-    ...
+    service = create_service()
+    
+    service.create_expense(title="Cursos", amount=30, description="", expense_date=date.today())
+    service.create_expense(title="Internet", amount=25, description="", expense_date=date.today())
+    
+    assert service.total_amount() == 55
+    
+    service.remove_expense(1)
+    
+    assert service.total_amount() == 25
