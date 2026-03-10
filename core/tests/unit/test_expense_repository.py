@@ -64,7 +64,7 @@ def test_get_by_id_returns_expense():
 
     assert fetched_expense is not None
     assert fetched_expense.id == 1
-    assert fetched_expense.title == "Gasto de prueba"
+    assert fetched_expense.title == "Gasto-Prueba"
     assert fetched_expense.amount == 50
 
 
